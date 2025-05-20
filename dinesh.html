@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>You are Hacked!</title>
+<style>
+  body {
+    background: radial-gradient(circle, #1a1a1a, #000);
+    color: #ff0000;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  h1 {
+    font-size: 4rem;
+    white-space: nowrap;
+    border-right: 4px solid #ff0000;
+    animation: typing 4s steps(22) forwards, flicker 1.5s infinite;
+    margin-bottom: 20px;
+  }
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 22ch }
+  }
+  @keyframes flicker {
+    0%, 100% { opacity: 1 }
+    50% { opacity: 0.6 }
+  }
+  #secretMessage {
+    margin-top: 30px;
+    font-size: 1.5rem;
+    color: #00ff00;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    text-align: center;
+  }
+  button {
+    background-color: #ff0000;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px #ff0000;
+    transition: background-color 0.3s;
+    min-width: 200px;
+  }
+  button:hover {
+    background-color: #cc0000;
+  }
+</style>
+</head>
+<body>
+
+<h1>You are Hacked!</h1>
+
+<button id="revealBtn">Reveal Secret Message</button>
+<button id="shareBtn">Share This Prank</button>
+
+<p id="secretMessage">This is just a prank! Stay safe and always secure your devices.</p>
+
+<audio id="beepSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
+
+<script>
+  const btn = document.getElementById('revealBtn');
+  const secret = document.getElementById('secretMessage');
+  const beep = document.getElementById('beepSound');
+  const shareBtn = document.getElementById('shareBtn');
+
+  btn.addEventListener('click', () => {
+    if(secret.style.opacity == 0 || secret.style.opacity === '') {
+      secret.style.opacity = 1;
+      btn.textContent = "Hide Secret Message";
+      beep.play();
+    } else {
+      secret.style.opacity = 0;
+      btn.textContent = "Reveal Secret Message";
+    }
+  });
+
+  shareBtn.addEventListener('click', async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'You are Hacked! Prank',
+          text: 'Check out this funny prank!',
+          url: window.location.href,
+        });
+      } catch (err) {
+        alert('Error sharing: ' + err);
+      }
+    } else {
+      alert('Sharing not supported on this browser.');
+    }
+  });
+</script>
+
+</body>
+</html>
+
